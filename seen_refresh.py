@@ -26,7 +26,7 @@ seen_top_prefix = seen_prefix + '-top'
 liver_prefix = '!!liver'
 liver_top_prefix = liver_prefix + '-top'
 
-helpmsg = '''------ {0} v{1} ------
+helpmsg = f'''------ {PLUGIN_NAME_SHORT} v{PLUGIN_METADATA['version']} ------
 一个查看服务器玩家在线(爆肝)和下线(摸鱼)的插件
 §d【指令说明】§r
 §7{2}§r或§7{4}§r 显示帮助信息
@@ -76,6 +76,16 @@ def on_player_left(server, player):
     t = now_time()
     set_seen(player, t, 'left')
 '''
+
+def joined_info(server: ServerInterface, info: Info):
+    if info.is_from_server:
+        joined_player = re.match(r'(\w+)\[([0-9\.:]+|local)\] logged in with entity id', info.content)
+        if joined_player:
+            if joined_player.group(2) == 'local':
+                return [True, 'bot', joined_player.group(1)]
+            else:
+                return [True, 'player', joined_player.group(1)]
+        return [False]
 
 
 def seen(server, info, playername):
@@ -222,35 +232,36 @@ def save_seens(seens):
         json_seens = json.dumps(seens)
         f.write(json_seens)
 
-def register_event_listener(server: ServerInterface):
-    server.register_event_listener()
-
 def register_command(server: ServerInterface):
     server.register_command(
         Literal(seen_prefix).
         runs(lambda src: seen_help(server, src.player)).
-        on_error(UnknownArgument, print_unknown_argument_message, handled=True).
+        on_error(UnknownArgument, lambda src :print_unknown_argument_message(src), handled=True).
         then(QuotableText('player').
             runs(lambda src, ctx: seen(server, src, ctx['player'])))
         )
     server.register_command(
         Literal(seen_top_prefix).
         runs(lambda src: seen_top(server, src)).
-        on_error(UnknownArgument, print_unknown_argument_message, handled=True)
+        on_error(UnknownArgument, lambda src :print_unknown_argument_message(src), handled=True)
         )
     server.register_command(
         Literal(liver_prefix).
         runs(lambda src: seen_help(server, src.player)).
-        on_error(UnknownArgument, print_unknown_argument_message, handled=True).
+        on_error(UnknownArgument, lambda src :print_unknown_argument_message(src), handled=True).
         then(QuotableText('player').
             runs(lambda src, ctx: liver(server, src, ctx['player'])))
         )
     server.register_command(
         Literal(liver_top_prefix).
         runs(lambda src: liver_top(server, src)).
-        on_error(UnknownArgument, print_unknown_argument_message, handled=True)
+        on_error(UnknownArgument, lambda src :print_unknown_argument_message(src), handled=True)
         )
-
-def on_load(server: ServerInterface, old):
+    
+def on_load(server: ServerInterface, prev_module):
     server.register_help_message('!!seen', '查看摸鱼榜/爆肝榜帮助')
     server.register_help_message('!!liver', '查看摸鱼榜/爆肝榜帮助')
+    server.register_event_listener('mcdr.general_info', lambda info: joined_info(server, info))
+    register_command(server)
+
+

@@ -1,6 +1,6 @@
 # Seen & Liver Refreshed
 
-[英语(English)](https://github.com/ra1ny-yuki/mcdr-seen-refreshed) | **简体中文**
+[English(英语)](https://github.com/ra1ny-yuki/mcdr-seen-refreshed) | **简体中文**
 
 Seen & Liver Refreshed (缩写为SeenR) 是一个用于显示爆肝摸鱼榜的 [MCDReforged](https://github.com/Fallen-Breath/MCDReforged)  插件.  该插件重置自 Pandaria和 Fallen_Breath开发的[MCD Seen](https://github.com/TISUnion/Seen/) .
 

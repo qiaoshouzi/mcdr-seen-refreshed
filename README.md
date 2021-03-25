@@ -7,7 +7,7 @@ Seen & Liver Refreshed (short as SeenR) is a [MCDReforged](https://github.com/Fa
 
 [MCDReforged](https://github.com/Fallen-Breath/MCDReforged) >= 1.0.0
 
-## Difference to MCD Seen
+## Difference from MCD Seen
 
 Supported identifying [Carpet](https://github.com/gnembon/fabric-carpet) bot, and added data correction system to prevent severe data error.
 

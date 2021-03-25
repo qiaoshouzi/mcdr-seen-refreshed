@@ -16,7 +16,7 @@ from ruamel.yaml.comments import CommentedMap
 PLUGIN_NAME_SHORT = 'Seen Refreshed'
 PLUGIN_METADATA = {
     'id': 'mcdr_seen_refreshed',
-    'version': '1.0.0',
+    'version': '1.0.1',
     'name': 'Seen and Liver Refreshed',
     'author': [
         'Pandaria',
@@ -450,8 +450,11 @@ def get_bot_info(online_list: list):
 
 def clear_online_player(server: ServerInterface, clear_only = False):
     seens = seens_from_file()
-    online_list = get_online_player_list(server)
-    online_list_real = get_bot_info(online_list)
+    if not clear_only:
+        online_list = get_online_player_list(server)
+        online_list_real = get_bot_info(online_list)
+    else:
+        online_list_real = []
     num = 0
     for key, value in seens.items():
         if not key in online_list_real or clear_only:

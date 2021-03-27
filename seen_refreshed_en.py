@@ -7,6 +7,7 @@ import os
 import shutil
 import time
 import re
+from parse import parse
 from mcdreforged.api.all import *
 import datetime
 import ruamel.yaml
@@ -105,32 +106,28 @@ def display_message(src: CommandSource or Info, msg: str, msg_prefix = default_m
     else:
         source.reply(msg)
 
+def verify_player_name(name: str):
+	return re.fullmatch(r'\w+', name) is not None
 
 def parse_join_info(info: Info):
-    content_splitted = info.content.split(' logged in with entity id ')
-    if len(content_splitted) > 1:
-        player_info = content_splitted[0].strip(']')
-        player_info_list = player_info.split('[')
-        player = player_info_list[0]
-        player_ip = player_info_list[1]
-        ret = [True, player]
-        if player_ip == 'local':
+    parsed = parse('{name}[{player_ip}] logged in with entity id {} at ({})', info.content)
+    if parsed is not None and verify_player_name(parsed['name']):
+        ret = [True, parsed['name']]
+        if parsed['player_ip'] == 'local':
             ret[1] = ret[1] + '@bot'
-        return ret
     else:
-        return [False]
-        
+        ret = [False]
+    return ret
 
 def parse_left_info(info: Info):
-    content_splitted = info.content.split(' lost connection: ')
-    if len(content_splitted) > 1:
-        player = content_splitted[0].strip()
-        ret = [True, player]
-        if content_splitted[1].strip() == 'Killed':
+    parsed = parse('{name} lost connection: {reason}', info.content)
+    if parsed is not None and verify_player_name(parsed['name']):
+        ret = [True, parsed['name']]
+        if parsed['reason'] == 'Killed':
             ret[1] = ret[1] + '@bot'
-        return ret
     else:
-        return [False]
+        ret = [False]
+    return ret
 
 helpmsg = f'''------ {PLUGIN_METADATA['name']} v{PLUGIN_METADATA['version']} ------
 A plugin to query players online and offline time.

@@ -15,7 +15,7 @@ from ruamel.yaml.comments import CommentedMap
 
 PLUGIN_METADATA = {
     'id': 'mcdr_seen_refreshed',
-    'version': '1.0.1',
+    'version': '1.0.2',
     'name': 'Seen and Liver Refreshed',
     'author': [
         'Pandaria',

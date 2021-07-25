@@ -7,7 +7,7 @@ Seen & Liver Refreshed (short as SeenR) is a [MCDReforged](https://github.com/Fa
 
 This plugin has trouble identifying the offfline message for carpet bot correctly sometimes in the latest carpet version (maybe later than 1.4.30?).
 
-But I'm too lazy to fix even if I've got how to fix this...(sad >3
+But I'm too lazy to fix althought I've got how to fix this...(sad >3
 
 ## Requirement
 

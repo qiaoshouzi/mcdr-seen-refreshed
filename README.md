@@ -1,7 +1,10 @@
 # Seen & Liver Refreshed
-  **English** | [简体中文(Simplified Chinese)](https://github.com/ra1ny-yuki/mcdr-seen-refreshed/blob/main/README_zh.md)
+  **English** | [简体中文(Simplified Chinese)](./README_zh.md)
 
 Seen & Liver Refreshed (short as SeenR) is a [MCDReforged](https://github.com/Fallen-Breath/MCDReforged) plugin to show laziness ranking. This plugin is the refresh version for [MCD Seen](https://github.com/TISUnion/Seen/) from Pandaria and Fallen_Breath.
+
+## Next step
+This plugin will not actively update before a useful [ChatBridge](https://github.com/TISUnion/ChatBridge) with plugin system appear.
 
 ## Known issue
 
